@@ -1,0 +1,23 @@
+function const = fset_consts()
+const.m = 700; %kg
+const.g = 9.8; %m/s^2
+const.c = 0.5; %kg/m
+const.b = 3600; %N
+const.u_max = 1.6;
+const.u_min = -1.4;
+const.a_comfmax = 2.5; %m/s^2
+const.gamma = 1.8;
+const.vg = 18; %m/s
+const.h = 10; %m
+const.w = 50; %m
+const.deltaT = 0.1; %s
+const.t0 = 0;
+const.end_t = 25; %s
+const.v_max = 50.043;
+const.alpha = const.v_max/2;
+const.beta = 3/16*const.c * const.v_max^2;
+const.Ts = 0.1;
+const.lambda = 0.1;
+const.v0 = 0.925*const.alpha;
+const.steps = const.end_t/const.Ts;
+end

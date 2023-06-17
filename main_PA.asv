@@ -1,0 +1,55 @@
+clear all; close all
+
+
+%% Create constants subclass
+
+const = fset_consts();
+const.a = 25.02; % DIT KAN NOG IN FORMULE FORM
+const.b = 234.78; % DIT KAN NOG IN FORMULE FORM
+%% Derive the slope based on given y funct
+x = 75; % Testing X
+curr_theta = fget_slope2(x,const);
+
+
+
+
+
+%% Create PWA of the LTI models
+
+LTI = fpwaModel(const,curr_theta);
+
+%% Create the MLD model
+
+
+%% Extra ongebruikte formules
+% % Define the gear ratio r as a function of speed v
+% r = @(v) (v < vg) + (v >= vg) * 2;
+
+% Friction force approximation 
+% P = @(v) (v >= 0 & v <= alpha) .* ((beta / alpha) * v) + (v > alpha & v <= v_max) .* (((c * v_max^2) - beta) / (v_max - alpha)) .* (v - alpha) + (v > v_max) .* 0;
+
+%% Set current gear
+if y(2) < const.vg
+    curr_gear = 1;
+elseif y(2) >= const.vg
+    curr_gear = 2;
+end
+
+
+%% Forward euler discretization
+function [T, x] = ForEuler(x0,u,const)
+
+% Initialize
+x = zeros(2, const.end_T);
+x(:,1) = x0;
+
+T = 1:const.end_t;
+T = T*const.deltaT;
+
+% Forward Euler integr
+for t = 2:const.end_t
+    x(:,t) = x(:,t-1) + const.deltaT * fpwaModel(t*const.deltaT, x(:,t-1),u,const,"");
+end
+
+end
+
